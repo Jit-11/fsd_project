@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { Navbar, Nav, Container, Button, Modal } from "react-bootstrap";
 import "../css/Navigation.css";
@@ -7,7 +7,32 @@ import logo from "../assets/logo-no-background.png";
 const Navigation = () => {
     const [expanded, setExpanded] = useState(false);
     const [showModal, setShowModal] = useState(false);
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
     const navigate = useNavigate();
+    const checkLoginStatus = () => {
+        const user = localStorage.getItem("user");
+        setIsLoggedIn(!!user); // Set isLoggedIn based on the presence of user
+    };
+
+    useEffect(() => {
+        checkLoginStatus(); // Initial check
+
+        const handleStorageChange = () => {
+            checkLoginStatus(); // Re-check on storage change
+        };
+
+        window.addEventListener("storage", handleStorageChange);
+
+        return () => {
+            window.removeEventListener("storage", handleStorageChange);
+        };
+    }, []);
+
+    const handleLogout = () => {
+        localStorage.removeItem("user");
+        checkLoginStatus(); // Update login status immediately
+        navigate("/");
+    };
 
     const menuItems = [
         { path: "/", label: "Home" },
@@ -45,9 +70,15 @@ const Navigation = () => {
                             ))}
                         </Nav>
 
-                        <Button variant="success" onClick={() => setShowModal(true)}>
-                            Login / SignUp
-                        </Button>
+                        {isLoggedIn ? (
+                            <Button variant="danger" onClick={handleLogout}>
+                                Logout
+                            </Button>
+                        ) : (
+                            <Button variant="success" onClick={() => setShowModal(true)}>
+                                Login / SignUp
+                            </Button>
+                        )}
                     </Navbar.Collapse>
                 </Container>
             </Navbar>

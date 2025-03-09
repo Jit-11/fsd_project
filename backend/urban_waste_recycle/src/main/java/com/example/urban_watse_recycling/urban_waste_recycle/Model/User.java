@@ -8,18 +8,28 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int uid;
+    private Long uid;  // Make sure other parts of your code use 'uid' if keeping this
 
+    @Column(nullable = false)
     private String name;
-    private String mobile;
-    private String email;
-    private String password;
 
-    public int getUid() {
+    @Column(nullable = false, unique = true)  // Ensure uniqueness
+    private String email;
+
+    @Column(nullable = false)
+    private String mobile;
+
+    @Column(nullable = false)
+    private String password;  // Consider hashing before storing
+
+    @Column(nullable = false, columnDefinition = "BOOLEAN DEFAULT FALSE")
+    private boolean emailVerified;
+
+    public Long getUid() {
         return uid;
     }
 
-    public void setUid(int uid) {
+    public void setUid(Long uid) {
         this.uid = uid;
     }
 

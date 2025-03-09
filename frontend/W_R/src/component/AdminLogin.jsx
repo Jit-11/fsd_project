@@ -5,7 +5,7 @@ import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../css/SignUp.css";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom"; // Import useNavigate
 import { getAdminLoginDetailsFromServer } from "../services/ApiService";
 import Navigation from "./Navigation";
 
@@ -13,7 +13,7 @@ const AdminLogin = () => {
     const initialValues = { email: "", password: "" };
     const [formValues, setFormValues] = useState(initialValues);
     const [formErrors, setFormErrors] = useState({});
-    const navigate = useNavigate();
+    const navigate = useNavigate(); // Initialize navigate
 
     const handleChange = (event) => {
         const { name, value } = event.target;
@@ -31,7 +31,8 @@ const AdminLogin = () => {
                 console.log(response.data);
 
                 if (response.data === "Login successful") {
-                    navigate("/admin-view");
+                    localStorage.setItem("user", JSON.stringify(formValues.email));
+                    navigate("/"); // Redirect to home page
                 } else {
                     alert("Incorrect email or password");
                 }
@@ -57,7 +58,6 @@ const AdminLogin = () => {
         } else if (values.password.length < 8) {
             errors.password = "Password must be at least 8 characters long.";
         }
-
         return errors;
     };
 
@@ -72,49 +72,19 @@ const AdminLogin = () => {
                                     <div className="row mt-3 mb-3 text-center">
                                         <h3 className="loginform">Admin Login</h3>
                                     </div>
-
-                                    {/* Email Input */}
                                     <Form.Group as={Col} md="12" className="mb-3">
                                         <Form.Label>Enter Email</Form.Label>
-                                        <Form.Control
-                                            type="text"
-                                            placeholder="Email Address"
-                                            name="email"
-                                            value={formValues.email}
-                                            onChange={handleChange}
-                                            isInvalid={!!formErrors.email}
-                                        />
-                                        <Form.Control.Feedback type="invalid">
-                                            {formErrors.email}
-                                        </Form.Control.Feedback>
+                                        <Form.Control type="text" placeholder="Email Address" name="email" value={formValues.email} onChange={handleChange} isInvalid={!!formErrors.email} />
+                                        <Form.Control.Feedback type="invalid">{formErrors.email}</Form.Control.Feedback>
                                     </Form.Group>
-
-                                    {/* Password Input */}
                                     <Form.Group as={Col} md="12" className="mb-3">
                                         <Form.Label>Password</Form.Label>
-                                        <Form.Control
-                                            type="password"
-                                            placeholder="Password"
-                                            name="password"
-                                            value={formValues.password}
-                                            onChange={handleChange}
-                                            isInvalid={!!formErrors.password}
-                                        />
-                                        <Form.Control.Feedback type="invalid">
-                                            {formErrors.password}
-                                        </Form.Control.Feedback>
+                                        <Form.Control type="password" placeholder="Password" name="password" value={formValues.password} onChange={handleChange} isInvalid={!!formErrors.password} />
+                                        <Form.Control.Feedback type="invalid">{formErrors.password}</Form.Control.Feedback>
                                     </Form.Group>
-
-                                    {/* Login Button */}
-                                    <Button type="submit" className="loginbtn btn btn-success w-100">
-                                        Login
-                                    </Button>
-
-                                    {/* Sign Up Link */}
+                                    <Button type="submit" className="loginbtn btn btn-success w-100">Login</Button>
                                     <div className="text-center pt-3">
-                    <span>
-                      New user? <Link to="/admin-sign-up">Sign Up</Link>
-                    </span>
+                                        <span>New user? <Link to="/admin-sign-up">Sign Up</Link></span>
                                     </div>
                                 </Col>
                             </Row>

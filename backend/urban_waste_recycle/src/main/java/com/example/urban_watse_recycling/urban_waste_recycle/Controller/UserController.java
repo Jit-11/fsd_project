@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:5173")
+@CrossOrigin(origins = "*")
 @RequestMapping("/user")
 public class UserController {
 
@@ -17,12 +17,11 @@ public class UserController {
 
     @PostMapping("/add")
     public String userAdd(@RequestBody User user) {
-        userService.add(user);
-        return "User added successfully";
+        return userService.add(user);
     }
 
     @GetMapping("/{uid}")
-    public User userGet(@PathVariable int uid) {
+    public User userGet(@PathVariable Long uid) {
         return userService.getById(uid);
     }
 
@@ -33,6 +32,7 @@ public class UserController {
 
     @PostMapping("/login")
     public String userLogin(@RequestBody User user) {
+        System.out.println("Received login request for email: " + user.getEmail());
         return userService.login(user);
     }
 }

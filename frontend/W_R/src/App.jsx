@@ -6,14 +6,14 @@ import RecycleTrail from "./component/RecycleTrail";
 import Feedback from "./component/Feedback";
 import MarketPlace from "./component/MarketPlace.jsx";
 import AdminLogin from "./component/AdminLogin";
-import AdminSignup from "./component/AdminSignup";
+import AdminSignup from "./component/AdminSignUp";
 import Login from "./component/Login";
-import Signup from "./component/Signup";
+import Signup from "./component/SignUp";
 
 function App() {
     return (
         <BrowserRouter>
-            <Navigation />
+            <Navigation/>
             <Routes>
                 <Route path="/" element={<></>} />
                 <Route path="/recycle-trail" element={<RecycleTrail />} />

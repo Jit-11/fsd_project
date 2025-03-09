@@ -16,12 +16,17 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public String add(User user) {
-        if (userDao.findByEmail(user.getEmail()).isPresent()) {
+        Optional<User> existingUser = userDao.findByEmail(user.getEmail());
+
+        if (existingUser.isPresent()) {
+            System.out.println("User already exists: " + existingUser.get());
             return "Error: Email already exists";
         }
+        System.out.println("Saving new user: " + user);
         userDao.save(user);
         return "User added successfully";
     }
+
 
     @Override
     public List<User> getAll() {
@@ -29,13 +34,18 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getById(int id) {
+    public User getById(Long id) {
         return userDao.findById(id).orElse(null);
     }
 
     @Override
     public String login(User user) {
-        Optional<User> foundUser = userDao.findByEmailAndPassword(user.getEmail(), user.getPassword());
-        return foundUser.isPresent() ? "Login successful" : "Invalid user";
+        Optional<User> foundUser = userDao.findByEmail(user.getEmail());
+
+        if (foundUser.isPresent() && foundUser.get().getPassword().equals(user.getPassword())) {
+            return "Login successful";
+        } else {
+            return "Invalid user";
+        }
     }
 }
