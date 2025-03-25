@@ -4,10 +4,15 @@ The Urban Waste Recycling platform connects sellers who want to sell waste mater
 
 🚀 Features
 ✅ Sellers: List waste materials for sale
+
 ✅ Buyers: Browse and purchase waste materials
+
 ✅ Admin: Manage users, edit existing listings
+
 ✅ Secure Authentication: User login/signup via email verification
+
 ✅ Database: MySQL for waste listings and user data
+
 ✅ Real-time Calling & Mail: Order updates and product availability
 
 🛠️ Tech Stack
@@ -22,43 +27,39 @@ Authentication: Spring Security with JavaMailSender
 Storage: Via Link
 
 ⚙️ Installation Guide
-1️⃣ Clone the Repository
+🏷 1️⃣ Clone the Repository
+Run the following command in your terminal:
+
 bash
 Copy
 Edit
 git clone https://github.com/yourusername/urban-waste-recycling.git
 cd urban-waste-recycling
-2️⃣ Backend Setup (Spring Boot)
+🏷 2️⃣ Backend Setup (Spring Boot)
 Navigate to the backend folder:
-
 bash
 Copy
 Edit
 cd backend
 Install dependencies and start the Spring Boot application:
-
 bash
 Copy
 Edit
 mvn clean install
 mvn spring-boot:run
 Ensure MySQL is running and create the database.
-
-3️⃣ Frontend Setup (React.js)
+🏷 3️⃣ Frontend Setup (React.js)
 Navigate to the frontend folder:
-
 bash
 Copy
 Edit
 cd frontend
 Install dependencies:
-
 bash
 Copy
 Edit
 npm install
 Start the React development server:
-
 bash
 Copy
 Edit
